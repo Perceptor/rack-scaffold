@@ -131,10 +131,10 @@ module Rack
             record = resource[params[:id]] or halt 404
             last_modified(last_modified_time(resource, record)) if resource.timestamps?
             
-            json = record.to_json(:except=>[:deviceToken])
+            json = JSON.parse(record.to_json(:except=>[:deviceToken]))
             json.merge({ :filtered_topic => record.filtered_topic })
             
-            {"#{resource.singular}" => JSON.parse( json )}.to_json
+            {"#{resource.singular}" => json }.to_json
           
           end
 
