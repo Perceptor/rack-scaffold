@@ -130,7 +130,12 @@ module Rack
           get "/#{resource.plural}/:id/?" do
             record = resource[params[:id]] or halt 404
             last_modified(last_modified_time(resource, record)) if resource.timestamps?
-            {"#{resource.singular}" => JSON.parse(record.to_json(:except=>[:deviceToken], :include=>[:filtered_topic]))}.to_json
+            
+            json = record.to_json(:except=>[:deviceToken])
+            json.merge({ :filtered_topic => record.filtered_topic })
+            
+            {"#{resource.singular}" => JSON.parse( json )}.to_json
+          
           end
 
           resource.one_to_many_associations.each do |association|
