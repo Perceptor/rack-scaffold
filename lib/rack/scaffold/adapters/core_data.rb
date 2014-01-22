@@ -116,9 +116,9 @@ module Rack::Scaffold::Adapters
         end
       end
 
-      # klass_constant = CoreData.const_defined?(entity.name) ? CoreData.const_get(entity.name) : CoreData.const_set(entity.name, klass)
-      # super(klass_constant)
-      super(CoreData.const_set(entity.name, klass))
+      klass_constant = CoreData.const_defined?(entity.name) ? CoreData.const_get(entity.name) : CoreData.const_set(entity.name, klass)
+      super(klass_constant)
+      # super(CoreData.const_set(entity.name, klass))
     end
 
     def establish_associations!(entity)
