@@ -141,6 +141,8 @@ module Rack
             get "/#{resource.plural}/:id/#{association}/?" do
               record = resource[params[:id]] or halt 404
               associations = record.send(association)
+              
+              associations.map{ |assoc| assoc[:completed_credits] = association.completed_credits?}
 
               {
                 "#{association}" => associations
