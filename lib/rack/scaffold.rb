@@ -142,7 +142,9 @@ module Rack
               record = resource[params[:id]] or halt 404
               associations = record.send(association)
               
-              associations.map{ |assoc| assoc[:completed_credits] = association.completed_credits?}
+              associations.map{ |assoc| 
+                assoc[:completed_credits] = assoc.completed_credits?
+              }
 
               {
                 "#{association}" => associations
