@@ -131,8 +131,9 @@ module Rack
             record = resource[params[:id]] or halt 404
             last_modified(last_modified_time(resource, record)) if resource.timestamps?
             
-            json_hash = {"#{resource.singular}" => JSON.parse(record.to_json(:except=>[:deviceToken]))}
-            json_hash[:completed_credits] = record.hits.map(&:completed).all?
+            record_as_json = record.to_json(:except=>[:deviceToken])
+            record_as_json[:completed_credits] = record.hits.map(&:completed).all?
+            json_hash = {"#{resource.singular}" => JSON.parse(record_as_json)}
             json_hash.to_json
           end
 
