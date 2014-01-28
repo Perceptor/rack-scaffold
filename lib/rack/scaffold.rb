@@ -143,7 +143,7 @@ module Rack
               associations = record.send(association)
               
               associations.map{ |assoc| 
-                assoc[:completed_credits] = Receipt.find(assoc[:id]).completed_credits?
+                assoc[:completed_credits] = assoc.completed_credits?
               }
 
               {
