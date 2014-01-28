@@ -8,8 +8,6 @@ require 'rack/scaffold/adapters'
 
 require 'pathname'
 
-require 'pp'
-
 module Rack
   class Scaffold
     ACTIONS = [:subscribe, :create, :read, :update, :destroy]
@@ -134,8 +132,6 @@ module Rack
             last_modified(last_modified_time(resource, record)) if resource.timestamps?
             
             json_hash = {"#{resource.singular}" => JSON.parse(record.to_json(:except=>[:deviceToken]))}
-            pp resource
-            pp record
             json_hash[:completed_credits] = record.completed_credits? if resource.class == 'Receipt'
             json_hash.to_json
           end
